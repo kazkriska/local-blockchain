@@ -1,0 +1,13 @@
+[Unit]
+Description=Besu Private Blockchain Node
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/kaz/local-blockchain
+ExecStart=/home/kaz/local-blockchain/besu/bin/besu --config-file=/home/kaz/local-blockchain/network/config/besu.config
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

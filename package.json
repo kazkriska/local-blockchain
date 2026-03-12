@@ -1,0 +1,7 @@
+{
+  "name": "local-blockchain-faucet",
+  "version": "1.0.0",
+  "dependencies": {
+    "ethers": "^6.13.0"
+  }
+}
