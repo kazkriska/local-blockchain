@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: blockscout
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: blockscout/blockscout:latest
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "bin/blockscout eval 'Explorer.ReleaseTasks.create_and_migrate()' && bin/blockscout start"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres_password@db:5432/blockscout?ssl=false
+      - ETHEREUM_JSONRPC_HTTP_URL=http://host.docker.internal:8545/
+      - ETHEREUM_JSONRPC_WS_URL=ws://host.docker.internal:8546/
+      - ETHEREUM_JSONRPC_VARIANT=besu
+      - CHAIN_ID=1337
+      - NETWORK=BESU_LOCAL
+      - COIN=ETH
+      - ECTO_USE_SSL=false
+      - PORT=4000
+      - SECRET_KEY_BASE=56eb02119131f4359905a83e05bc26d9bc569bc440d2101f5bc440d2101f5bc4
+      - CHECK_ORIGIN=false
+      - DISABLE_WEBAPP=true
+      - INDEXER_DISABLE_INTERNAL_TRANSACTIONS_FETCHER=true
+      - INDEXER_DISABLE_BLOCK_REWARD_FETCHER=true
+      - INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER=true
+      - TYPED_DATA_ENABLED=false
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "4000:4000"
+
+  frontend:
+    image: ghcr.io/blockscout/frontend:latest
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      - PORT=3000
+      - NEXT_PUBLIC_NETWORK_ID=1337
+      - NEXT_PUBLIC_NETWORK_NAME=Besu Local
+      - NEXT_PUBLIC_APP_PROTOCOL=http
+      - NEXT_PUBLIC_APP_HOST=localhost
+      - NEXT_PUBLIC_APP_PORT=3001
+      - NEXT_PUBLIC_API_PROTOCOL=http
+      - NEXT_PUBLIC_API_HOST=localhost
+      - NEXT_PUBLIC_API_PORT=4000
+      - NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL=ws
+    ports:
+      - "3001:3000"

@@ -2,8 +2,8 @@ const { ethers } = require("ethers");
 
 // Configuration
 const RPC_URL = "http://localhost:8545";
-const PRIVATE_KEY = "0x96cabff6ef4d17e56803b09e808e7769cd0e5489757c6cb7dadca465a22dfe87"; // Validator account 0x29dbee...
-const AMOUNT_ETH = "100.0";
+const PRIVATE_KEY = "0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63"; // Pre-funded account 0xfe3b55...
+const AMOUNT_ETH = "1.0";
 
 async function main() {
     const args = process.argv.slice(2);
@@ -19,9 +19,13 @@ async function main() {
     console.log(`Sending ${AMOUNT_ETH} ETH from ${wallet.address} to ${recipient}...`);
 
     try {
+        const network = await provider.getNetwork();
         const tx = await wallet.sendTransaction({
             to: recipient,
             value: ethers.parseEther(AMOUNT_ETH),
+            gasLimit: 21000,
+            gasPrice: 1000000000, // 1 Gwei
+            chainId: network.chainId,
         });
 
         console.log(`Transaction sent! Hash: ${tx.hash}`);

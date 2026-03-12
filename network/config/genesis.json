@@ -11,19 +11,19 @@
       "blockperiodseconds": 2,
       "epochlength": 30000,
       "requesttimeoutseconds": 10,
-      "miningbeneficiary": "0x29dbee38a39f546a41dffb698ba212a1ef61f1a0"
+      "miningbeneficiary": "0x35caeaed5950d9f6be4733fd07e81a910a6543bd"
     }
   },
   "nonce": "0x0",
   "timestamp": "0x58e81a01",
   "gasLimit": "0x1fffffffffffff",
   "difficulty": "0x1",
-  "extraData": "0xf83aa00000000000000000000000000000000000000000000000000000000000000000d59429dbee38a39f546a41dffb698ba212a1ef61f1a0c080c0",
+  "extraData": "0xf83aa00000000000000000000000000000000000000000000000000000000000000000d59435caeaed5950d9f6be4733fd07e81a910a6543bdc080c0",
   "alloc": {
     "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73": {
       "balance": "0xAD78EBC5AC6200000"
     },
-    "0x29dbee38a39f546a41dffb698ba212a1ef61f1a0": {
+    "0x35caeaed5950d9f6be4733fd07e81a910a6543bd": {
       "balance": "0xAD78EBC5AC6200000"
     }
   }

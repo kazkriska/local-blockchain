@@ -7,7 +7,7 @@ A fully configured, private Ethereum-compatible blockchain environment powered b
 - **Automated Block Production:** Pre-configured 2-second block times.
 - **Persistent Service:** Runs as a `systemd` user-level service for high availability.
 - **Interactive Management:** One-stop-shop management via the `node_info.sh` script.
-- **Built-in Faucet:** Instantly fund any wallet with 100 ETH.
+- **Built-in Faucet:** Instantly fund any wallet with 1 ETH.
 - **Pro Block Explorer:** Modern, React-based Web UI to visualize blocks, transactions, and addresses.
 - **Wallet Utilities:** Easy wallet creation and balance checking.
 
@@ -40,25 +40,28 @@ The primary way to interact with your blockchain is through the interactive dash
 ```
 
 **Options inside the dashboard:**
-1.  **Send 100 ETH (Faucet):** Input an address to instantly send 100 ETH from the validator's pre-funded account.
+1.  **Send 1 ETH (Faucet):** Input an address to instantly send 1 ETH from the validator's pre-funded account.
 2.  **Create New Wallet:** Generates a new random Ethereum address and its private key.
 3.  **Check Wallet Balance:** Query the current ETH balance of any address on the network.
 4.  **Launch Block Explorer:** Starts the Web UI server.
 5.  **Refresh Status:** Updates the current block height and network status.
 
----
+## 🌐 Block Explorers
 
-## 🌐 Pro Block Explorer
+### 1. Pro Explorer (Built-in)
+A lightweight React-based explorer for quick checks.
+- Run `./node_info.sh` and select **Option 4**.
+- Visit `http://localhost:3000`.
 
-To view your blockchain in a browser:
-1. Run `./node_info.sh` and select **Option 4**.
-2. Open your browser to **`http://localhost:3000`**.
-
-**Capabilities:**
-- **Real-time Dashboard:** View the latest blocks as they are mined.
-- **Search:** Paste a Transaction Hash, Block Number, or Address into the search bar.
-- **Details:** Click any block to see gas usage, extra data, and timestamps.
-- **CORS-Safe:** Uses a built-in Node.js proxy to communicate safely with the Besu RPC.
+### 2. Blockscout (Advanced)
+A professional-grade explorer with full indexing, token support, and smart contract verification.
+- **Requirements:** Docker and Docker Compose installed.
+- **Launch:**
+  ```bash
+  docker-compose up -d
+  ```
+- **Access:** `http://localhost:3001`
+- **Stop:** `docker-compose down`
 
 ---
 
@@ -69,7 +72,7 @@ To view your blockchain in a browser:
     - `genesis.json`: The network definition and pre-funded accounts.
     - `besu.config`: The main node configuration (RPC, CORS, QBFT).
 - `node_info.sh`: The main interactive CLI controller.
-- `faucet.js`: Logic for signing and sending 100 ETH transactions.
+- `faucet.js`: Logic for signing and sending 1 ETH transactions.
 - `explorer_server.js` & `index.html`: The Block Explorer backend and frontend.
 - `create_wallet.js` & `get_balance.js`: Utility scripts for wallet management.
 

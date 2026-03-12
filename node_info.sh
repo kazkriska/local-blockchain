@@ -6,7 +6,7 @@ show_status() {
     echo -n "Current Block Number: "
     curl -s -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' http://localhost:8545 | grep -oP '(?<="result":")[^"]+' | xargs printf "%d\n" 2>/dev/null || echo "Error connecting to node"
     echo -n "Node Address: "
-    curl -s -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":1}' http://localhost:8545 | grep -oP '(?<="result":")[^"]+' || echo "0x29dbee38a39f546a41dffb698ba212a1ef61f1a0"
+    curl -s -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":1}' http://localhost:8545 | grep -oP '(?<="result":")[^"]+' || echo "0x35caeaed5950d9f6be4733fd07e81a910a6543bd"
     echo "------------------------"
 }
 
@@ -14,7 +14,7 @@ while true; do
     show_status
     echo ""
     echo "Select an option:"
-    echo "(1) Send 100 ETH (Faucet)"
+    echo "(1) Send 1 ETH (Faucet)"
     echo "(2) Create New Wallet"
     echo "(3) Check Wallet Balance"
     echo "(4) Launch Block Explorer (Web UI)"
@@ -44,7 +44,7 @@ while true; do
             fi
             ;;
         4)
-            echo "Starting Block Explorer at http://localhost:3000..."
+            echo "Starting Pro Block Explorer at http://localhost:3000..."
             echo "Press Ctrl+C to stop the explorer and return to menu."
             node explorer_server.js
             ;;
